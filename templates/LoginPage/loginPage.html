@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#1C2533] flex items-center justify-center min-h-screen">
+    <div class="bg-[#001d3d] shadow-xl rounded-xl p-8 w-full max-w-md">
+      <h2 class="text-3xl font-bold text-center text-white mb-6">Login</h2>
+
+      <!-- Login Form -->
+      <form class="space-y-4">
+        <div>
+          <label class="block text-gray-500 font-medium mb-1">Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label class="block text-gray-500 font-medium mb-1">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div class="flex justify-between text-sm mt-2">
+          <a href="#" class="text-gray-500 hover:underline">Forgot password?</a>
+          <a href="#" class="text-gray-500 hover:underline"
+            >Create an account</a
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+        >
+          Login
+        </button>
+      </form>
+
+      <div class="my-6 flex items-center justify-center">
+        <div class="border-t w-full border-gray-300"></div>
+        <span class="px-3 text-gray-400 text-sm">or login with</span>
+        <div class="border-t w-full border-gray-300"></div>
+      </div>
+
+      <!-- Social Buttons -->
+      <div class="flex flex-col space-y-3">
+        <button
+          class="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition"
+        >
+          <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
+          <span class="text-sm font-medium text-gray-700"
+            >Login with Google</span
+          >
+        </button>
+        <button
+          class="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition"
+        >
+          <img src="https://img.icons8.com/color/16/000000/facebook-new.png" />
+          <span class="text-sm font-medium text-gray-700"
+            >Login with Facebook</span
+          >
+        </button>
+      </div>
+    </div>
+     
+  </body>
+</html>

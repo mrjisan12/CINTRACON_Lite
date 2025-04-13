@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+{% block title %}Job Opportunites{% endblock %}
+
+
+
+{% load static %}
+
+{% block content %}
+<!-- Job Opportunities Page -->
+<div class="bg-gray-900 text-white py-12 px-4">
+    <!-- Header Section -->
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <h1 class="text-3xl font-bold">Find Your Jobs</h1>
+        <a href="#" class="bg-orange-500 text-white py-2 px-6 rounded-lg hover:bg-orange-600 transition">Post a Job</a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+        {% for job in jobs %}
+            <!-- Job Listings -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gray-700">
+                <!-- Company Image Section -->
+                <div class="flex justify-center mb-4">
+                    <img src="{{ job.image.url }}" alt="Company Logo" class="w-24 h-24 rounded-full object-cover">
+                </div>
+    
+                <!-- Job Information Section -->
+                <h3 class="text-xl font-semibold text-white mb-2">{{ job.title }} - {{ job.company_name }}</h3>
+                <p class="text-gray-300 mb-2">{{ job.description }}</p>
+                <p class="text-gray-400 mb-4">{{ job.location }}</p> <!-- Location added -->
+    
+                <!-- Job Details Section -->
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <span class="text-lg font-semibold text-blue-600">{{ job.salary }} BDT / Month</span>
+                        <span class="text-sm text-red-500 ml-2">{{ job.deadline }}</span>
+                    </div>
+                    <span class="text-sm text-green-500">{{ job.place }}</span>
+                </div>
+    
+                <!-- Apply Now Button -->
+                <a href="{{ job.apply_link }}" class="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition duration-300" target="_blank">Apply Now</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+
+
+
+</div>
+{% endblock %}

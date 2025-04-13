@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cintracon Lite</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#1E2836] text-white font-sans">
+    <!-- Section 1: Hero -->
+    <section
+      class="min-h-screen flex flex-col items-center justify-center text-center px-4"
+    >
+      <img
+        src="{% static 'images/cintracon_logo.png' %}"
+        alt="Cintracon Logo"
+        class="w-32 mb-4"
+      />
+      <h1 class="text-4xl sm:text-5xl font-extrabold">
+        Welcome to <span class="text-green-500">CINTRACON Lite</span>
+      </h1>
+      <p class="mt-4 text-lg text-gray-300 max-w-xl">
+        A Student-driven Platform for Connecting, Sharing, and Growing Together.
+      </p>
+      <a
+        href="{% url 'home' %}"
+        class="mt-20 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-red-800 transition"
+      >
+        Home →
+      </a>
+    </section>
+
+    <!-- Section 2: What Actually is CINTRACON -->
+    <section
+      class="py-20 px-6 bg-[#1C2533] flex flex-col md:flex-row items-center gap-12"
+    >
+      <!-- Text content -->
+      <div class="md:w-1/2">
+        <h2 class="text-3xl font-bold mb-4">What Actually is CINTRACON?</h2>
+        <p class="text-gray-300 text-lg">
+          CINTRACON is a student-driven platform that connects students, alumni,
+          and professionals, enabling them to share knowledge, experiences, and
+          opportunities.
+        </p>
+      </div>
+      <!-- Image -->
+      <div class="md:w-1/2">
+        <img
+          src="{% static 'images/home.jpg' %}"
+          alt="About CINTRACON"
+          class="rounded-xl shadow-lg"
+        />
+      </div>
+    </section>
+
+    <!-- Section 3: What is Our Goal -->
+    <section class="py-20 px-6 text-center bg-[#1C2533]">
+      <h2 class="text-3xl font-bold mb-6">What is Our Goal?</h2>
+      <p class="text-gray-300 text-lg max-w-3xl mx-auto">
+        Our goal is to create an environment where students can easily interact,
+        collaborate, share academic resources, and support each other in their
+        educational journey.
+      </p>
+    </section>
+
+     
+  </body>
+</html>
