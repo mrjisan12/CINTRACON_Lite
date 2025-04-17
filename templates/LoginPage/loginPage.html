@@ -3,73 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
+    <title>Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
   </head>
-  <body class="bg-[#1C2533] flex items-center justify-center min-h-screen">
-    <div class="bg-[#001d3d] shadow-xl rounded-xl p-8 w-full max-w-md">
-      <h2 class="text-3xl font-bold text-center text-white mb-6">Login</h2>
+  <body class="bg-[#0F172A] min-h-screen flex items-center justify-center px-4">
+    <div class="bg-[#1E293B] text-white w-full max-w-xl rounded-2xl shadow-2xl px-10 py-12">
+      <h1 class="text-4xl font-bold text-center mb-2">Login</h1>
+      <p class="text-gray-400 text-center mb-8">Enter your credentials to access your account</p>
 
       <!-- Login Form -->
-      <form class="space-y-4">
+      <form method="POST" action="{% url 'loginPage' %}" class="space-y-6" onsubmit="showLoadingModal()">
+        {% csrf_token %}
+
+        <!-- Display form errors -->
+        {% if form.errors %}
+          <div class="text-red-500">
+            <ul class="errorlist">
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <!-- Email -->
         <div>
-          <label class="block text-gray-500 font-medium mb-1">Email</label>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <label class="block text-gray-500 font-medium mb-1">Password</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <label class="block text-sm text-gray-300 mb-3">Email Address</label>
+          <input type="email" name="username" placeholder="Enter your email"
+            class="w-full px-4 py-3 rounded-lg bg-[#334155] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            required />
         </div>
 
-        <div class="flex justify-between text-sm mt-2">
+        <!-- Password -->
+        <div>
+          <label class="block text-sm text-gray-300 mb-3 mt-3">Password</label>
+          <div class="relative">
+            <input type="password" id="password" name="password" placeholder="********"
+              class="w-full px-4 py-3 rounded-lg bg-[#334155] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              required />
+            <!-- Eye Icon for visibility toggle -->
+            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me -->
+        <div class="flex items-center space-x-2 mt-3">
+          <input type="checkbox" id="remember" name="remember" class="accent-blue-600 w-4 h-4" />
+          <label for="remember" class="text-gray-300 text-sm">Remember me</label>
+        </div>
+
+        <div class="flex justify-between text-sm mt-2 mb-3">
           <a href="#" class="text-gray-500 hover:underline">Forgot password?</a>
-          <a href="#" class="text-gray-500 hover:underline"
-            >Create an account</a
-          >
+          <a href="{% url 'signupPage' %}" class="text-gray-500 hover:underline">Create an account</a>
         </div>
 
-        <button
-          type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
-        >
+        <button type="submit"
+          class="w-full bg-green-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition">
           Login
         </button>
       </form>
+    </div>
 
-      <div class="my-6 flex items-center justify-center">
-        <div class="border-t w-full border-gray-300"></div>
-        <span class="px-3 text-gray-400 text-sm">or login with</span>
-        <div class="border-t w-full border-gray-300"></div>
-      </div>
-
-      <!-- Social Buttons -->
-      <div class="flex flex-col space-y-3">
-        <button
-          class="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition"
-        >
-          <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
-          <span class="text-sm font-medium text-gray-700"
-            >Login with Google</span
-          >
-        </button>
-        <button
-          class="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition"
-        >
-          <img src="https://img.icons8.com/color/16/000000/facebook-new.png" />
-          <span class="text-sm font-medium text-gray-700"
-            >Login with Facebook</span
-          >
-        </button>
+    <!-- Modal for loading -->
+    <div id="loadingModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 hidden">
+      <div class="bg-[#1E293B] p-6 rounded-xl flex items-center justify-center space-x-4">
+        <div class="text-white text-xl">Logging in...</div>
+        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-600"></div>
       </div>
     </div>
-     
+
+    <script>
+      // Show or hide password functionality
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordField = document.getElementById('password');
+
+      togglePassword.addEventListener('click', function() {
+        // Toggle the type attribute
+        const type = passwordField.type === 'password' ? 'text' : 'password';
+        passwordField.type = type;
+
+        // Toggle the eye icon (optional, for visual feedback)
+        this.textContent = type === 'password' ? '👁️' : '🙈';
+      });
+
+      function showLoadingModal() {
+        document.getElementById("loadingModal").classList.remove("hidden");
+      }
+    </script>
   </body>
 </html>

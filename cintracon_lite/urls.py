@@ -19,13 +19,15 @@ from django.urls import path, include
 from . import views
 from . import settings
 from django.conf.urls.static import static
+from authentication import views as auth
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.landingPage, name="landingPage"),
-    path('login/', views.loginPage, name="loginPage"),
-    path('signup/', views.signupPage, name="signupPage"),
+    path('login/', auth.loginPage, name="loginPage"),
+    path('signup/', auth.signupPage, name="signupPage"),
+    path('register/', auth.register, name='register'),
     path('home/', include('home.urls')),
     path('allstudents/', include('allstudents.urls')),
     path('job-opportunities/', include('jobopportunities.urls')),

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User 
+from authentication.models import *
 
 # Create your models here.
 class JobPost(models.Model):
@@ -22,7 +23,7 @@ class JobPost(models.Model):
     image = models.ImageField(upload_to='jobPost/', blank=True, null=True)
     deadline = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='job_posts')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='job_posts')
     
     
     def __str__(self):
