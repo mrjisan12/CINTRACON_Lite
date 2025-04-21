@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'allstudents',
     'jobopportunities',
+    'notes_sharing',
     
 ]
 

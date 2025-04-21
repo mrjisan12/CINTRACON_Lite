@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}All Students{% endblock %}
+
+{% block content %}
+
+<body class="bg-gray-900 text-white min-h-screen">
+  <div class="flex justify-between items-center px-6 py-4 border-b border-gray-700">
+    <h1 class="text-2xl font-bold">Filter Notes</h1>
+    <div class="flex items-center gap-4">
+      <div>
+        <label for="department" class="mr-2">Department</label>
+        <select id="department" class="bg-gray-800 text-white rounded px-3 py-1">
+          <option>CSE</option>
+          <option>EEE</option>
+          <option>BBA</option>
+        </select>
+      </div>
+      <div>
+        <label for="semester" class="mr-2">Semester</label>
+        <select id="semester" class="bg-gray-800 text-white rounded px-3 py-1">
+          <option>1st</option>
+          <option>2nd</option>
+          <option>3rd</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- Card -->
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">1.1</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">16</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">1.2</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">20</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">2.1</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">12</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">2.2</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">32</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">3.1</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">16</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">3.2</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">35</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">4.1</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">27</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4 shadow">
+      <h2 class="text-xl font-semibold">4.2</h2>
+      <p class="text-sm text-gray-400">TOTAL MATERIAL</p>
+      <p class="text-2xl font-bold">26</p>
+    </div>
+  </div>
+</body>
+
+{% endblock %}
+
