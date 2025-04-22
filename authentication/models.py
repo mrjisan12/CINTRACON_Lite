@@ -1,17 +1,42 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, full_name, password=None, **extra_fields):
+        """
+        Creates and returns a user with an email, full name, and password.
+        """
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, full_name=full_name, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, full_name, password=None, **extra_fields):
+        """
+        Creates and returns a superuser with an email, full name, and password.
+        """
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self.create_user(email, full_name, password, **extra_fields)
+
 
 # Create your models here.
 class CustomUser(AbstractUser):
      # Replace 'username' with 'email' as the unique identifier
     username = None  # Remove the username field
     email = models.EmailField(unique=True)  # Make email unique
+    full_name = models.CharField(max_length=255)
 
     # Specify that email should be the unique identifier
     USERNAME_FIELD = 'email'  # This tells Django to use email as the identifier
     REQUIRED_FIELDS = ['full_name']  # Email and full_name are required fields for creating a superuser
 
-    full_name = models.CharField(max_length=255)
+    objects = CustomUserManager() # For Custom User and admin Reg
+    
 
 
 
