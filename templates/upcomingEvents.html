@@ -8,7 +8,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mb-8">
       <h1 class="text-3xl font-bold">Upcoming Events</h1>
-      <a href="#" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition">Create Event</a>
+      <button onclick="openModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition">Create Event</button>
     </div>
 
     <!-- Events Grid -->
@@ -32,4 +32,50 @@
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div id="createEventModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md text-gray-900 relative">
+    <!-- Close Button -->
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+    <h2 class="text-xl font-bold mb-4">Create Event</h2>
+    <form method="POST" enctype="multipart/form-data" action="#">
+      {% csrf_token %}
+      <!-- Title -->
+      <div class="mb-4">
+        <label for="title" class="block text-sm font-semibold">Title</label>
+        <input type="text" name="title" id="title" class="w-full border border-gray-300 rounded px-3 py-2" required>
+      </div>
+      <!-- Description -->
+      <div class="mb-4">
+        <label for="description" class="block text-sm font-semibold">Description</label>
+        <textarea name="description" id="description" rows="3" class="w-full border border-gray-300 rounded px-3 py-2" required></textarea>
+      </div>
+      <!-- Date -->
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-semibold">Date</label>
+        <input type="date" name="date" id="date" class="w-full border border-gray-300 rounded px-3 py-2" required>
+      </div>
+      <!-- Image -->
+      <div class="mb-4">
+        <label for="image" class="block text-sm font-semibold">Event Image (optional)</label>
+        <input type="file" name="image" id="image" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>
+      <!-- Submit -->
+      <div class="text-right">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('createEventModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('createEventModal').classList.add('hidden');
+  }
+</script>
 {% endblock %}
