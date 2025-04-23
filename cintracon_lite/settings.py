@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allstudents',
     'jobopportunities',
     'notes_sharing',
+    'upcomingevents',
     
 ]
 
