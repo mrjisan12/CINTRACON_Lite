@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Upcoming Events{% endblock %}
+
+{% block content %}
+<section class="bg-gray-900 text-white py-12 px-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Upcoming Events</h1>
+      <button onclick="openModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition">Create Event</button>
+    </div>
+
+    <!-- Events Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {% for event in events %}
+      <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+        <div class="flex items-center space-x-4 mb-4">
+          <img src="{% if event.image %}{{ event.image.url }}{% else %}{% static 'images/default-event.png' %}{% endif %}" alt="Event Image" class="w-16 h-16 rounded-full object-cover">
+          <div>
+            <h2 class="text-xl font-bold">{{ event.title }}</h2>
+            <p class="text-gray-400 text-sm">{{ event.user.full_name }}</p>
+          </div>
+        </div>
+        <p class="text-gray-300 mb-2">{{ event.description }}</p>
+        <p class="text-sm text-gray-400">{{ event.date|date:"F d, Y" }}</p>
+        <a href="#" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">I'm Interested</a>
+      </div>
+      {% empty %}
+      <p class="text-gray-400">No upcoming events available.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="createEventModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md text-gray-900 relative">
+    <!-- Close Button -->
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+    <h2 class="text-xl font-bold mb-4">Create Event</h2>
+    <form method="POST" enctype="multipart/form-data" action="#">
+      {% csrf_token %}
+      <!-- Title -->
+      <div class="mb-4">
+        <label for="title" class="block text-sm font-semibold">Title</label>
+        <input type="text" name="title" id="title" class="w-full border border-gray-300 rounded px-3 py-2" required>
+      </div>
+      <!-- Description -->
+      <div class="mb-4">
+        <label for="description" class="block text-sm font-semibold">Description</label>
+        <textarea name="description" id="description" rows="3" class="w-full border border-gray-300 rounded px-3 py-2" required></textarea>
+      </div>
+      <!-- Date -->
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-semibold">Date</label>
+        <input type="date" name="date" id="date" class="w-full border border-gray-300 rounded px-3 py-2" required>
+      </div>
+      <!-- Image -->
+      <div class="mb-4">
+        <label for="image" class="block text-sm font-semibold">Event Image (optional)</label>
+        <input type="file" name="image" id="image" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>
+      <!-- Submit -->
+      <div class="text-right">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('createEventModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('createEventModal').classList.add('hidden');
+  }
+</script>
+{% endblock %}
