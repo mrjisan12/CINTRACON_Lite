@@ -1,51 +1,233 @@
-
 {% extends "base.html" %}
-{% block title %}Job Opportunites{% endblock %}
-
-
+{% block title %}Job Opportunities{% endblock %}
 
 {% load static %}
 
 {% block content %}
 <!-- Job Opportunities Page -->
-<div class="bg-gray-900 text-white py-12 px-4">
-    <!-- Header Section -->
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <h1 class="text-3xl font-bold">Find Your Jobs</h1>
-        <a href="#" class="bg-orange-500 text-white py-2 px-6 rounded-lg hover:bg-orange-600 transition">Post a Job</a>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-        {% for job in jobs %}
-            <!-- Job Listings -->
-            <div class="bg-gray-800 p-6 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gray-700">
-                <!-- Company Image Section -->
-                <div class="flex justify-center mb-4">
-                    <img src="{{ job.image.url }}" alt="Company Logo" class="w-24 h-24 rounded-full object-cover">
-                </div>
-    
-                <!-- Job Information Section -->
-                <h3 class="text-xl font-semibold text-white mb-2">{{ job.title }} - {{ job.company_name }}</h3>
-                <p class="text-gray-300 mb-2">{{ job.description }}</p>
-                <p class="text-gray-400 mb-4">{{ job.location }}</p> <!-- Location added -->
-    
-                <!-- Job Details Section -->
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <span class="text-lg font-semibold text-blue-600">{{ job.salary }} BDT / Month</span>
-                        <span class="text-sm text-red-500 ml-2">{{ job.deadline }}</span>
+<div class="bg-gray-900 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+            <div>
+                <h1 class="text-4xl font-bold text-white">Job Opportunities</h1>
+                <p class="mt-2 text-lg text-gray-300">Find your dream job with top companies</p>
+                
+                {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                    <div class="p-4 rounded text-white {% if message.tags == 'success' %}bg-green-600{% else %}bg-red-600{% endif %}">
+                        {{ message }}
                     </div>
-                    <span class="text-sm text-green-500">{{ job.place }}</span>
+                    {% endfor %}
                 </div>
-    
-                <!-- Apply Now Button -->
-                <a href="{{ job.apply_link }}" class="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition duration-300" target="_blank">Apply Now</a>
+                {% endif %}
             </div>
-        {% endfor %}
+            <button onclick="openModal()" class="mt-4 sm:mt-0 bg-orange-500 text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition shadow-md hover:shadow-lg">
+                Post a Job
+            </button>
+        </div>
+
+        <!-- Job Listings Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for job in jobs %}
+            <!-- Job Card -->
+            <div class="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-700">
+                <!-- Company & Poster Info -->
+                <div class="p-6 pb-0">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-16 w-16 rounded-full object-cover border-2 border-orange-500" src="{{ job.image.url }}" alt="Company Logo">
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">{{ job.company_name }}</h3>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <svg class="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Posted by {{ job.user.full_name }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Details -->
+                <div class="p-6 pt-4">
+                    <h2 class="text-xl font-bold text-white mb-2">{{ job.title }}</h2>
+                    <p class="text-gray-300 mb-4 line-clamp-2">{{ job.description }}</p>
+                    
+                    <div class="flex items-center text-sm text-gray-400 mb-3">
+                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        {{ job.location }}
+                    </div>
+                    
+                    <div class="flex flex-col space-y-2 text-sm text-gray-400 mb-4">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Timing: {{ job.start_timing|time:"g:i A" }} - {{ job.end_timing|time:"g:i A" }}
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Deadline: {{ job.deadline }}
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="inline-block bg-gray-700 text-orange-400 text-sm font-semibold px-3 py-1 rounded-full">
+                            {{ job.place }}
+                        </span>
+                        <span class="text-lg font-bold text-blue-400">{{ job.salary }} BDT/month</span>
+                    </div>
+                    
+                    <div class="flex justify-between space-x-4">
+                        <!-- Apply Button -->
+                        <a href="{{ job.apply_link }}" target="_blank" class="w-1/2 text-center bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4 rounded-lg hover:from-green-600 hover:to-orange-700 transition duration-300 shadow-md hover:shadow-lg">
+                            Apply Here
+                        </a>
+                    
+                        {% if job.user == request.user %}
+                            <!-- Delete Button -->
+                            <button onclick="openDeleteModal('{{ job.id }}')" class="w-1/2 text-center bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Delete
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Modal for this specific job -->
+            <div id="deleteModal-{{ job.id }}" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+                    <h2 class="text-xl font-semibold mb-4">Confirm Deletion</h2>
+                    <p class="mb-6">Are you sure you want to delete this job post?</p>
+                    <div class="flex justify-end space-x-4">
+                        <button onclick="closeDeleteModal('{{ job.id }}')" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">No</button>
+                        <form method="post" action="{% url 'delete_job_post' job.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Yes, Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    
-
-
-
 </div>
+
+<!-- Job Post Modal -->
+<div id="jobPostModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6 mx-4">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-2xl font-bold text-white">Post a Job Opportunity</h3>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-white">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" action="{% url 'create_job_post' %}" class="space-y-4">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">Job Title</label>
+                    <input type="text" name="title" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Company Name</label>
+                    <input type="text" name="company_name" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-gray-300 mb-2">Job Description</label>
+                <textarea name="description" rows="3" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">Salary (BDT)</label>
+                    <input type="number" name="salary" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Job Location</label>
+                    <input type="text" name="place" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Deadline</label>
+                    <input type="date" name="deadline" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">Start Time</label>
+                    <input type="time" name="start_timing" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">End Time</label>
+                    <input type="time" name="end_timing" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-gray-300 mb-2">Application Link</label>
+                <input type="url" name="apply_link" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            
+            <div>
+                <label class="block text-gray-300 mb-2">Company Logo</label>
+                <input type="file" name="image" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            
+            <div class="flex justify-end space-x-4 pt-4">
+                <button type="button" onclick="closeModal()" class="px-6 py-2 text-gray-300 hover:text-white rounded-lg border border-gray-600 hover:bg-gray-700 transition">
+                    Cancel
+                </button>
+                <button type="submit" class="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition shadow-md">
+                    Post Job
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // For job post modal
+    function openModal() {
+        document.getElementById('jobPostModal').classList.remove('hidden');
+    }
+    
+    function closeModal() {
+        document.getElementById('jobPostModal').classList.add('hidden');
+    }
+    
+    // For delete modals
+    function openDeleteModal(jobId) {
+        document.getElementById(`deleteModal-${jobId}`).classList.remove('hidden');
+    }
+    
+    function closeDeleteModal(jobId) {
+        document.getElementById(`deleteModal-${jobId}`).classList.add('hidden');
+    }
+    
+    // Close modal when clicking outside
+    document.getElementById('jobPostModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>
 {% endblock %}
