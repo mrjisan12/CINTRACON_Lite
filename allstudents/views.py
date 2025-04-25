@@ -1,5 +1,6 @@
 from django.shortcuts import render
+from authentication.models import UserProfile
 
-# Create your views here.
 def allStudents(request):
-    return render(request,'AllStudents/allStudentsPage.html')
+    students = UserProfile.objects.select_related('user').filter(user__is_superuser=False)
+    return render(request, 'AllStudents/allStudentsPage.html', {'students': students})

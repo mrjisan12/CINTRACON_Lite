@@ -3,77 +3,128 @@
 {% block title %}Upcoming Events{% endblock %}
 
 {% block content %}
-<section class="bg-gray-900 text-white py-12 px-6">
-  <div class="max-w-7xl mx-auto">
+<div class="bg-[#111827] text-white px-4 sm:px-6 lg:px-8 pt-6 pb-2 min-h-[calc(100vh-460px)] relative overflow-hidden">
+  <!-- Animated background -->
+  <div class="fixed inset-0 overflow-hidden opacity-20 z-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-72 h-72 bg-orange-900 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-float1"></div>
+    <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-pink-900 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-float2"></div>
+    <div class="absolute bottom-0 left-1/2 w-80 h-80 bg-yellow-900 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-float3"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto z-10">
     <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold">Upcoming Events</h1>
-      <button onclick="openModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition">Create Event</button>
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center mb-4 relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full blur-md opacity-75 animate-pulse"></div>
+        <div class="w-14 h-14 rounded-full bg-gray-900 flex items-center justify-center relative z-10 border border-gray-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
+        Upcoming Events
+      </h1>
+      <p class="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+        Don’t miss out on the exciting things coming your way
+      </p>
+      <button onclick="openModal()" class="mt-6 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg shadow-md transition">Create Event</button>
     </div>
 
     <!-- Events Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-6">
       {% for event in events %}
-      <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
-        <div class="flex items-center space-x-4 mb-4">
-          <img src="{% if event.image %}{{ event.image.url }}{% else %}{% static 'images/default-event.png' %}{% endif %}" alt="Event Image" class="w-16 h-16 rounded-full object-cover">
-          <div>
-            <h2 class="text-xl font-bold">{{ event.title }}</h2>
-            <p class="text-gray-400 text-sm">{{ event.user.full_name }}</p>
+        <div class="group relative bg-white/5 border border-white/10 rounded-lg p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-500/20 hover:border-orange-400/30">
+          <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
+          <div class="relative z-10">
+            <div class="flex items-center mb-3 space-x-3">
+              <img src="{% if event.image %}{{ event.image.url }}{% else %}{% static 'images/default-event.png' %}{% endif %}" alt="Event Image" class="w-14 h-14 rounded-full object-cover">
+              <div>
+                <h2 class="text-lg font-semibold text-orange-300">{{ event.title }}</h2>
+                <p class="text-xs text-gray-400">{{ event.user.full_name }}</p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-300 mb-2 group-hover:text-gray-100 transition duration-300">{{ event.description }}</p>
+            <p class="text-xs text-gray-400 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10" />
+              </svg>
+              {{ event.date|date:"F d, Y" }}
+            </p>
+            <a href="#" class="inline-block mt-4 text-sm bg-orange-600 hover:bg-orange-700 text-white px-4 py-1.5 rounded transition">I'm Interested</a>
           </div>
         </div>
-        <p class="text-gray-300 mb-2">{{ event.description }}</p>
-        <p class="text-sm text-gray-400">{{ event.date|date:"F d, Y" }}</p>
-        <a href="#" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">I'm Interested</a>
-      </div>
       {% empty %}
-      <p class="text-gray-400">No upcoming events available.</p>
+        <div class="col-span-full text-center py-10">
+          <p class="text-gray-400">No upcoming events available at the moment.</p>
+        </div>
       {% endfor %}
     </div>
   </div>
-</section>
+</div>
 
-<!-- Modal -->
-<div id="createEventModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md text-gray-900 relative">
-    <!-- Close Button -->
-    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
-    <h2 class="text-xl font-bold mb-4">Create Event</h2>
+<!-- Create Event Modal -->
+<div id="createEventModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
+  <div class="backdrop-blur-xl bg-white/10 border border-orange-400 shadow-lg shadow-orange-500/40 rounded-2xl p-6 w-full max-w-md text-white relative transition duration-300">
+
+    <button onclick="closeModal()" class="absolute top-2 right-3 text-orange-300 hover:text-orange-500 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-4 text-orange-300">Create Event</h2>
     <form method="POST" enctype="multipart/form-data" action="#">
       {% csrf_token %}
-      <!-- Title -->
       <div class="mb-4">
-        <label for="title" class="block text-sm font-semibold">Title</label>
-        <input type="text" name="title" id="title" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <label for="title" class="block text-sm font-semibold text-orange-200">Title</label>
+        <input type="text" name="title" id="title" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20" required>
       </div>
-      <!-- Description -->
       <div class="mb-4">
-        <label for="description" class="block text-sm font-semibold">Description</label>
-        <textarea name="description" id="description" rows="3" class="w-full border border-gray-300 rounded px-3 py-2" required></textarea>
+        <label for="description" class="block text-sm font-semibold text-orange-200">Description</label>
+        <textarea name="description" id="description" rows="3" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20" required></textarea>
       </div>
-      <!-- Date -->
       <div class="mb-4">
-        <label for="date" class="block text-sm font-semibold">Date</label>
-        <input type="date" name="date" id="date" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <label for="date" class="block text-sm font-semibold text-orange-200">Date</label>
+        <input type="date" name="date" id="date" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20" required>
       </div>
-      <!-- Image -->
       <div class="mb-4">
-        <label for="image" class="block text-sm font-semibold">Event Image (optional)</label>
-        <input type="file" name="image" id="image" class="w-full border border-gray-300 rounded px-3 py-2">
+        <label for="image" class="block text-sm font-semibold text-orange-200">Event Image (optional)</label>
+        <input type="file" name="image" id="image" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20">
       </div>
-      <!-- Submit -->
       <div class="text-right">
-        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
+        <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded shadow-md shadow-orange-500/40 transition">Submit</button>
       </div>
     </form>
   </div>
 </div>
 
+<!-- Floating Animations -->
+<style>
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-15px) translateX(10px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(10px) translateX(-15px); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(5px); }
+  }
+  .animate-float1 { animation: float1 10s ease-in-out infinite; }
+  .animate-float2 { animation: float2 12s ease-in-out infinite; }
+  .animate-float3 { animation: float3 14s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.75; }
+    50% { opacity: 0.4; }
+  }
+  .animate-pulse { animation: pulse 4s ease-in-out infinite; }
+</style>
+
+<!-- Modal JS -->
 <script>
   function openModal() {
     document.getElementById('createEventModal').classList.remove('hidden');
   }
-
   function closeModal() {
     document.getElementById('createEventModal').classList.add('hidden');
   }
