@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'jobopportunities',
     'notes_sharing',
     'upcomingevents',
+    'Announcement',
     
 ]
 

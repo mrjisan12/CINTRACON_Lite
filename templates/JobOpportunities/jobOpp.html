@@ -9,22 +9,22 @@
     <div class="max-w-7xl mx-auto">
         <!-- Header Section -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-            <div>
-                <h1 class="text-4xl font-bold text-white">Job Opportunities</h1>
-                <p class="mt-2 text-lg text-gray-300">Find your dream job with top companies</p>
+            <div class="transform transition-all duration-500 hover:scale-105">
+                <h1 class="text-4xl font-bold text-white animate-fadeIn">Job Opportunities</h1>
+                <p class="mt-2 text-lg text-gray-300 animate-fadeIn delay-100">Find your dream job with top companies</p>
                 
                 {% if messages %}
-                <div class="mb-4">
+                <div class="mb-4 animate-fadeInUp">
                     {% for message in messages %}
-                    <div class="p-4 rounded text-white {% if message.tags == 'success' %}bg-green-600{% else %}bg-red-600{% endif %}">
+                    <div class="p-4 rounded text-white {% if message.tags == 'success' %}bg-green-600{% else %}bg-red-600{% endif %} animate-pulse">
                         {{ message }}
                     </div>
                     {% endfor %}
                 </div>
                 {% endif %}
             </div>
-            <button onclick="openModal()" class="mt-4 sm:mt-0 bg-orange-500 text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition shadow-md hover:shadow-lg">
-                Post a Job
+            <button onclick="openModal()" class="mt-4 sm:mt-0 bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-6 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
+                Post a Job <span class="ml-1">+</span>
             </button>
         </div>
 
@@ -32,20 +32,20 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for job in jobs %}
             <!-- Job Card -->
-            <div class="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-700">
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-700 hover:border-orange-500 transform hover:-translate-y-2 group">
                 <!-- Company & Poster Info -->
                 <div class="p-6 pb-0">
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
-                            <img class="h-16 w-16 rounded-full object-cover border-2 border-orange-500" src="{{ job.image.url }}" alt="Company Logo">
+                            <img class="h-16 w-16 rounded-full object-cover border-2 border-orange-500 group-hover:border-white transition-all duration-300" src="{{ job.image.url }}" alt="Company Logo">
                         </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-white">{{ job.company_name }}</h3>
+                        <div class="overflow-hidden">
+                            <h3 class="text-lg font-bold text-white truncate">{{ job.company_name }}</h3>
                             <div class="flex items-center text-sm text-gray-400">
                                 <svg class="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Posted by {{ job.user.full_name }}</span>
+                                <span class="truncate">Posted by {{ job.user.full_name }}</span>
                             </div>
                         </div>
                     </div>
@@ -53,49 +53,46 @@
 
                 <!-- Job Details -->
                 <div class="p-6 pt-4">
-                    <h2 class="text-xl font-bold text-white mb-2">{{ job.title }}</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">{{ job.title }}</h2>
                     <p class="text-gray-300 mb-4 line-clamp-2">{{ job.description }}</p>
                     
-                    <div class="flex items-center text-sm text-gray-400 mb-3">
-                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        {{ job.location }}
+                    <!-- Location without icon -->
+                    <div class="text-sm text-gray-400 mb-3">
+                        <span>{{ job.location }}</span>
                     </div>
                     
                     <div class="flex flex-col space-y-2 text-sm text-gray-400 mb-4">
                         <div class="flex items-center">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-5 w-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            Timing: {{ job.start_timing|time:"g:i A" }} - {{ job.end_timing|time:"g:i A" }}
+                            <span class="truncate">Timing: {{ job.start_timing|time:"g:i A" }} - {{ job.end_timing|time:"g:i A" }}</span>
                         </div>
                         <div class="flex items-center">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-5 w-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
-                            Deadline: {{ job.deadline }}
+                            <span>Deadline: {{ job.deadline }}</span>
                         </div>
                     </div>
                     
                     <div class="flex justify-between items-center mb-6">
-                        <span class="inline-block bg-gray-700 text-orange-400 text-sm font-semibold px-3 py-1 rounded-full">
+                        <span class="inline-block bg-gray-700 text-orange-400 text-sm font-semibold px-3 py-1 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
                             {{ job.place }}
                         </span>
-                        <span class="text-lg font-bold text-blue-400">{{ job.salary }} BDT/month</span>
+                        <span class="text-lg font-bold text-blue-400 group-hover:text-blue-300 transition-colors duration-300">{{ job.salary }} BDT/month</span>
                     </div>
                     
                     <div class="flex justify-between space-x-4">
-                        <!-- Apply Button -->
-                        <a href="{{ job.apply_link }}" target="_blank" class="w-1/2 text-center bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4 rounded-lg hover:from-green-600 hover:to-orange-700 transition duration-300 shadow-md hover:shadow-lg">
-                            Apply Here
+                        <!-- Apply Button with enhanced transition -->
+                        <a href="{{ job.apply_link }}" target="_blank" class="w-1/2 text-center bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 active:translate-y-0 flex items-center justify-center transition-transform duration-200 ease-in-out">
+                            Apply <svg class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </a>
                     
                         {% if job.user == request.user %}
-                            <!-- Delete Button -->
-                            <button onclick="openDeleteModal('{{ job.id }}')" class="w-1/2 text-center bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition duration-300 shadow-md hover:shadow-lg">
-                                Delete
+                            <!-- Delete Button with enhanced transition -->
+                            <button onclick="openDeleteModal('{{ job.id }}')" class="w-1/2 text-center bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 active:translate-y-0 flex items-center justify-center transition-transform duration-200 ease-in-out">
+                                Delete <svg class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         {% endif %}
                     </div>
@@ -103,15 +100,24 @@
             </div>
 
             <!-- Delete Modal for this specific job -->
-            <div id="deleteModal-{{ job.id }}" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-                <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
-                    <h2 class="text-xl font-semibold mb-4">Confirm Deletion</h2>
-                    <p class="mb-6">Are you sure you want to delete this job post?</p>
+            <div id="deleteModal-{{ job.id }}" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 animate-fadeIn">
+                <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95 group-hover:scale-100">
+                    <div class="flex items-center mb-4">
+                        <div class="p-2 rounded-full bg-red-100 mr-3">
+                            <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-semibold">Confirm Deletion</h2>
+                    </div>
+                    <p class="mb-6 text-gray-600">Are you sure you want to delete this job post? This action cannot be undone.</p>
                     <div class="flex justify-end space-x-4">
-                        <button onclick="closeDeleteModal('{{ job.id }}')" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">No</button>
+                        <button onclick="closeDeleteModal('{{ job.id }}')" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-300">Cancel</button>
                         <form method="post" action="{% url 'delete_job_post' job.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Yes, Delete</button>
+                            <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition-colors duration-300 flex items-center">
+                                Delete <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -122,11 +128,11 @@
 </div>
 
 <!-- Job Post Modal -->
-<div id="jobPostModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6 mx-4">
+<div id="jobPostModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden p-4">
+    <div class="bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl p-6 mx-4 transform transition-all duration-300 scale-95" id="modalContent">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-bold text-white">Post a Job Opportunity</h3>
-            <button onclick="closeModal()" class="text-gray-400 hover:text-white">
+            <button onclick="closeModal()" class="text-gray-400 hover:text-white transform hover:rotate-90 transition-transform duration-300">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -137,90 +143,148 @@
             {% csrf_token %}
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+                <div class="animate-fadeIn">
                     <label class="block text-gray-300 mb-2">Job Title</label>
-                    <input type="text" name="title" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="text" name="title" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
                 
-                <div>
+                <div class="animate-fadeIn delay-100">
                     <label class="block text-gray-300 mb-2">Company Name</label>
-                    <input type="text" name="company_name" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="text" name="company_name" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
             </div>
             
-            <div>
+            <div class="animate-fadeIn delay-200">
                 <label class="block text-gray-300 mb-2">Job Description</label>
-                <textarea name="description" rows="3" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                <textarea name="description" rows="3" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300"></textarea>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
+                <div class="animate-fadeIn delay-300">
                     <label class="block text-gray-300 mb-2">Salary (BDT)</label>
-                    <input type="number" name="salary" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="number" name="salary" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
                 
-                <div>
+                <div class="animate-fadeIn delay-300">
                     <label class="block text-gray-300 mb-2">Job Location</label>
-                    <input type="text" name="place" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="text" name="place" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
                 
-                <div>
+                <div class="animate-fadeIn delay-300">
                     <label class="block text-gray-300 mb-2">Deadline</label>
-                    <input type="date" name="deadline" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="date" name="deadline" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+                <div class="animate-fadeIn delay-400">
                     <label class="block text-gray-300 mb-2">Start Time</label>
-                    <input type="time" name="start_timing" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="time" name="start_timing" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
                 
-                <div>
+                <div class="animate-fadeIn delay-400">
                     <label class="block text-gray-300 mb-2">End Time</label>
-                    <input type="time" name="end_timing" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <input type="time" name="end_timing" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
                 </div>
             </div>
             
-            <div>
+            <div class="animate-fadeIn delay-500">
                 <label class="block text-gray-300 mb-2">Application Link</label>
-                <input type="url" name="apply_link" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <input type="url" name="apply_link" required class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-gray-600 hover:border-orange-400 transition-colors duration-300">
             </div>
             
-            <div>
+            <div class="animate-fadeIn delay-600">
                 <label class="block text-gray-300 mb-2">Company Logo</label>
-                <input type="file" name="image" class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <div class="flex items-center justify-center w-full">
+                    <label class="flex flex-col w-full h-32 border-2 border-dashed border-gray-600 hover:border-orange-500 transition-colors duration-300 rounded-lg cursor-pointer bg-gray-700 hover:bg-gray-700/50">
+                        <div class="flex flex-col items-center justify-center pt-7">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-400 group-hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-300">Upload Logo</p>
+                        </div>
+                        <input type="file" name="image" class="opacity-0" />
+                    </label>
+                </div>
             </div>
             
-            <div class="flex justify-end space-x-4 pt-4">
-                <button type="button" onclick="closeModal()" class="px-6 py-2 text-gray-300 hover:text-white rounded-lg border border-gray-600 hover:bg-gray-700 transition">
+            <div class="flex justify-end space-x-4 pt-4 animate-fadeIn delay-700">
+                <button type="button" onclick="closeModal()" class="px-6 py-2 text-gray-300 hover:text-white rounded-lg border border-gray-600 hover:bg-gray-700 transition-all duration-300 transform hover:-translate-x-1">
                     Cancel
                 </button>
-                <button type="submit" class="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition shadow-md">
-                    Post Job
+                <button type="submit" class="px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0 flex items-center">
+                    Post Job <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                 </button>
             </div>
         </form>
     </div>
 </div>
 
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+    .animate-fadeInUp {
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
 <script>
-    // For job post modal
+    // For job post modal with enhanced animations
     function openModal() {
-        document.getElementById('jobPostModal').classList.remove('hidden');
+        const modal = document.getElementById('jobPostModal');
+        const content = document.getElementById('modalContent');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('bg-opacity-50');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }, 10);
     }
     
     function closeModal() {
-        document.getElementById('jobPostModal').classList.add('hidden');
+        const modal = document.getElementById('jobPostModal');
+        const content = document.getElementById('modalContent');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
     }
     
-    // For delete modals
+    // For delete modals with animations
     function openDeleteModal(jobId) {
-        document.getElementById(`deleteModal-${jobId}`).classList.remove('hidden');
+        const modal = document.getElementById(`deleteModal-${jobId}`);
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('bg-opacity-50');
+        }, 10);
     }
     
     function closeDeleteModal(jobId) {
-        document.getElementById(`deleteModal-${jobId}`).classList.add('hidden');
+        const modal = document.getElementById(`deleteModal-${jobId}`);
+        modal.classList.add('hidden');
     }
     
     // Close modal when clicking outside
@@ -228,6 +292,16 @@
         if (e.target === this) {
             closeModal();
         }
+    });
+    
+    // Add animation to job cards on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const jobCards = document.querySelectorAll('.group');
+        jobCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+        });
     });
 </script>
 {% endblock %}
