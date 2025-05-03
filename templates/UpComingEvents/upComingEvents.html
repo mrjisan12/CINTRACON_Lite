@@ -68,30 +68,31 @@
 <div id="createEventModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
   <div class="backdrop-blur-xl bg-white/10 border border-orange-400 shadow-lg shadow-orange-500/40 rounded-2xl p-6 w-full max-w-md text-white relative transition duration-300">
 
-    <button onclick="closeModal()" class="absolute top-2 right-3 text-orange-300 hover:text-orange-500 text-2xl">&times;</button>
-    <h2 class="text-2xl font-bold mb-4 text-orange-300">Create Event</h2>
-    <form method="POST" enctype="multipart/form-data" action="#">
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white hover:text-orange-300 text-xl">&times;</button>
+    <h2 class="text-xl font-semibold mb-4">Create Upcoming Event</h2>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'create_upcoming_event' %}">
       {% csrf_token %}
-      <div class="mb-4">
-        <label for="title" class="block text-sm font-semibold text-orange-200">Title</label>
-        <input type="text" name="title" id="title" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20" required>
+      <div class="mb-3">
+        <label for="title" class="block text-sm mb-1">Title</label>
+        <input type="text" id="title" name="title" class="w-full rounded px-3 py-2 bg-white/20 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+      <div class="mb-3">
+        <label for="description" class="block text-sm mb-1">Description</label>
+        <textarea id="description" name="description" rows="3" class="w-full rounded px-3 py-2 bg-white/20 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="date" class="block text-sm mb-1">Date</label>
+        <input type="date" id="date" name="date" class="w-full rounded px-3 py-2 bg-white/20 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500">
       </div>
       <div class="mb-4">
-        <label for="description" class="block text-sm font-semibold text-orange-200">Description</label>
-        <textarea name="description" id="description" rows="3" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20" required></textarea>
-      </div>
-      <div class="mb-4">
-        <label for="date" class="block text-sm font-semibold text-orange-200">Date</label>
-        <input type="date" name="date" id="date" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20" required>
-      </div>
-      <div class="mb-4">
-        <label for="image" class="block text-sm font-semibold text-orange-200">Event Image (optional)</label>
-        <input type="file" name="image" id="image" class="w-full bg-white/10 border border-orange-400/60 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-inner shadow-orange-300/20">
+        <label for="image" class="block text-sm mb-1">Image</label>
+        <input type="file" id="image" name="image" class="w-full text-white">
       </div>
       <div class="text-right">
-        <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded shadow-md shadow-orange-500/40 transition">Submit</button>
+        <button type="submit" class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded text-white">Create</button>
       </div>
     </form>
+
   </div>
 </div>
 

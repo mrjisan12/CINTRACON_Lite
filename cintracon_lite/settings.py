@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'notes_sharing',
     'upcomingevents',
     'Announcement',
+    'django.contrib.humanize',
     
 ]
 

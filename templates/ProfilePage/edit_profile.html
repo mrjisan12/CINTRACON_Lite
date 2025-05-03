@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Edit Profile Page -->
+<div class="bg-[#111827] text-white px-4 sm:px-6 lg:px-8 py-8 min-h-[calc(100vh-460px)] relative overflow-hidden">
+  <!-- Animated background -->
+  <div class="fixed inset-0 overflow-hidden opacity-20 z-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-72 h-72 bg-purple-900 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-float1"></div>
+    <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-blue-900 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-float2"></div>
+    <div class="absolute bottom-0 left-1/2 w-80 h-80 bg-indigo-900 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-float3"></div>
+  </div>
+
+  <div class="relative max-w-4xl mx-auto z-10">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+        Edit Profile
+      </h1>
+      <p class="text-gray-400 max-w-lg mx-auto">
+        Update your personal information and social links
+      </p>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="bg-white/5 border border-white/10 rounded-xl p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/30">
+      <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- Profile Picture Upload -->
+        <div class="flex flex-col items-center mb-6">
+          <div class="relative mb-4">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-md opacity-75 animate-pulse -z-10"></div>
+            <div class="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center relative z-10 border-4 border-white/10 overflow-hidden">
+              <img id="profile-preview" src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile Picture" class="w-full h-full object-cover">
+            </div>
+          </div>
+          
+          <label class="cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center">
+            <input type="file" name="profile_pic" id="profile-pic-input" class="hidden" accept="image/*">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            Change Photo
+          </label>
+        </div>
+        
+        <!-- Basic Information -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Full Name</label>
+            <input type="text" name="full_name" value="{{ user.full_name }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Email</label>
+            <input type="email" name="email" value="{{ user.email }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+          </div>
+        </div>
+        
+        <!-- Academic Information -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Batch No</label>
+            <input type="text" name="batch_no" value="{{ user.batch_no }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Blood Group</label>
+            <select name="blood_grp" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <option value="A+" {% if user.blood_grp == 'A+' %}selected{% endif %}>A+</option>
+              <option value="A-" {% if user.blood_grp == 'A-' %}selected{% endif %}>A-</option>
+              <option value="B+" {% if user.blood_grp == 'B+' %}selected{% endif %}>B+</option>
+              <option value="B-" {% if user.blood_grp == 'B-' %}selected{% endif %}>B-</option>
+              <option value="AB+" {% if user.blood_grp == 'AB+' %}selected{% endif %}>AB+</option>
+              <option value="AB-" {% if user.blood_grp == 'AB-' %}selected{% endif %}>AB-</option>
+              <option value="O+" {% if user.blood_grp == 'O+' %}selected{% endif %}>O+</option>
+              <option value="O-" {% if user.blood_grp == 'O-' %}selected{% endif %}>O-</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Department</label>
+            <select name="department" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <option value="CSE" {% if user.department == 'CSE' %}selected{% endif %}>Computer Science</option>
+              <option value="EEE" {% if user.department == 'EEE' %}selected{% endif %}>Electrical Engineering</option>
+              <option value="ME" {% if user.department == 'ME' %}selected{% endif %}>Mechanical Engineering</option>
+              <option value="CE" {% if user.department == 'CE' %}selected{% endif %}>Civil Engineering</option>
+              <option value="IPE" {% if user.department == 'IPE' %}selected{% endif %}>Industrial Engineering</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Semester</label>
+            <select name="semester" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              {% for i in "12345678" %}
+                <option value="{{ i }}" {% if user.semester == i %}selected{% endif %}>Semester {{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-purple-200 mb-2">Section</label>
+            <select name="section" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <option value="A" {% if user.section == 'A' %}selected{% endif %}>Section A</option>
+              <option value="B" {% if user.section == 'B' %}selected{% endif %}>Section B</option>
+              <option value="C" {% if user.section == 'C' %}selected{% endif %}>Section C</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="pt-4">
+          <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+            </svg>
+            Social Links
+          </h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold text-purple-200 mb-2">Facebook Profile</label>
+              <input type="url" name="facebook_link" value="{{ user.facebook_link|default:'' }}" placeholder="https://facebook.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-purple-200 mb-2">GitHub Profile</label>
+              <input type="url" name="github_link" value="{{ user.github_link|default:'' }}" placeholder="https://github.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-purple-200 mb-2">Instagram Profile</label>
+              <input type="url" name="instagram_link" value="{{ user.instagram_link|default:'' }}" placeholder="https://instagram.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Form Actions -->
+        <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-6">
+          <a href="{% url 'profile' user.id%}" class="px-6 py-2.5 text-gray-300 hover:text-white rounded-lg border border-gray-600 hover:bg-gray-700/50 transition-all duration-300 text-center">
+            Cancel
+          </a>
+          <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Animations -->
+<style>
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-15px) translateX(10px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(10px) translateX(-15px); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(5px); }
+  }
+  .animate-float1 { animation: float1 10s ease-in-out infinite; }
+  .animate-float2 { animation: float2 12s ease-in-out infinite; }
+  .animate-float3 { animation: float3 14s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.75; }
+    50% { opacity: 0.4; }
+  }
+  .animate-pulse { animation: pulse 4s ease-in-out infinite; }
+</style>
+
+<!-- Profile Picture Preview Script -->
+<script>
+  document.getElementById('profile-pic-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('profile-preview').src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Animation on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    form.style.opacity = '0';
+    form.style.transform = 'translateY(20px)';
+    form.style.transition = 'all 0.5s ease-out';
+    
+    setTimeout(() => {
+      form.style.opacity = '1';
+      form.style.transform = 'translateY(0)';
+    }, 100);
+  });
+</script>
+
+{% endblock %}
