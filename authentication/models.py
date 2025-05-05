@@ -91,12 +91,12 @@ class UserProfile(models.Model):
     semester = models.CharField(max_length=10, choices=SEMESTERS)
     section = models.CharField(max_length=10, choices=SECTIONS)
     batch_no = models.CharField(max_length=20)
-    phone_num = models.CharField(max_length=15)
+    phone_num = models.CharField(max_length=15, null=True, blank=True)
     blood_grp = models.CharField(max_length=15, choices=BLOOD_GROUPS,null=True,blank=True)
     points = models.IntegerField(default=0)
-    facebook_link = models.CharField(max_length=255)
-    instagram_link = models.CharField(max_length=255)
-    linkedin_link = models.CharField(max_length=255)
+    facebook_link = models.CharField(max_length=255, null=True, blank=True)
+    instagram_link = models.CharField(max_length=255, null=True, blank=True)
+    linkedin_link = models.CharField(max_length=255, null=True, blank=True)
     profile_image = models.ImageField(upload_to='profiles/', default='images/default.jpg', null=True, blank=True)
 
 

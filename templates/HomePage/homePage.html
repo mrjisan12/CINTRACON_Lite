@@ -17,7 +17,7 @@
         {% csrf_token %}
         <div class="flex items-start space-x-3">
           <img
-            src="{% static 'images/jisan.jpg' %}"
+            src="{% if user.userprofile.profile_image %}{{ user.userprofile.profile_image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
             alt="Profile"
             class="w-10 h-10 rounded-full object-cover"
           />
@@ -163,7 +163,7 @@
         <!-- Post Header -->
         <div class="p-4 flex items-center space-x-3">
           <img
-            src="{% static 'images/jisan.jpg' %}"
+            src="{% if post.user.userprofile.profile_image %}{{ post.user.userprofile.profile_image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
             alt="User"
             class="w-10 h-10 rounded-full object-cover"
           />

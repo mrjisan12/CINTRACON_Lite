@@ -25,6 +25,12 @@
       </p>
     </div>
 
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+
     <!-- Edit Profile Form -->
     <div class="bg-white/5 border border-white/10 rounded-xl p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:border-purple-400/30">
       <form method="post" enctype="multipart/form-data" class="space-y-6">
@@ -40,7 +46,7 @@
           </div>
           
           <label class="cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center">
-            <input type="file" name="profile_pic" id="profile-pic-input" class="hidden" accept="image/*">
+            <input type="file" name="profile_image" id="profile-pic-input" class="hidden" accept="image/*">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -144,8 +150,8 @@
             </div>
             
             <div>
-              <label class="block text-sm font-semibold text-purple-200 mb-2">GitHub Profile</label>
-              <input type="url" name="github_link" value="{{ user.userprofile.github_link|default:'' }}" placeholder="https://github.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <label class="block text-sm font-semibold text-purple-200 mb-2">Linkedin Profile</label>
+              <input type="url" name="linkedin_link" value="{{ user.userprofile.linkedin_link|default:'' }}" placeholder="https://github.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
             </div>
             
             <div>
