@@ -35,7 +35,7 @@
           <div class="relative mb-4">
             <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-md opacity-75 animate-pulse -z-10"></div>
             <div class="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center relative z-10 border-4 border-white/10 overflow-hidden">
-              <img id="profile-preview" src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile Picture" class="w-full h-full object-cover">
+              <img id="profile-preview" src="{% if user.userprofile.profile_image %}{{ user.userprofile.profile_image.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile Picture" class="w-full h-full object-cover">
             </div>
           </div>
           
@@ -58,7 +58,7 @@
           
           <div>
             <label class="block text-sm font-semibold text-purple-200 mb-2">Email</label>
-            <input type="email" name="email" value="{{ user.email }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+            <input type="email" name="email" value="{{ user.email }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20 " disabled>
           </div>
         </div>
         
@@ -66,31 +66,33 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label class="block text-sm font-semibold text-purple-200 mb-2">Batch No</label>
-            <input type="text" name="batch_no" value="{{ user.batch_no }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+            <input type="text" name="batch_no" value="{{ user.userprofile.batch_no }}" required class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
           </div>
           
           <div>
             <label class="block text-sm font-semibold text-purple-200 mb-2">Blood Group</label>
-            <select name="blood_grp" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
-              <option value="A+" {% if user.blood_grp == 'A+' %}selected{% endif %}>A+</option>
-              <option value="A-" {% if user.blood_grp == 'A-' %}selected{% endif %}>A-</option>
-              <option value="B+" {% if user.blood_grp == 'B+' %}selected{% endif %}>B+</option>
-              <option value="B-" {% if user.blood_grp == 'B-' %}selected{% endif %}>B-</option>
-              <option value="AB+" {% if user.blood_grp == 'AB+' %}selected{% endif %}>AB+</option>
-              <option value="AB-" {% if user.blood_grp == 'AB-' %}selected{% endif %}>AB-</option>
-              <option value="O+" {% if user.blood_grp == 'O+' %}selected{% endif %}>O+</option>
-              <option value="O-" {% if user.blood_grp == 'O-' %}selected{% endif %}>O-</option>
+            <select name="blood_grp" class="w-full bg-transparent border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <option value="" {% if user.blood_grp == '' %}selected{% endif %}>Not Selected</option>
+              <option value="A+" {% if user.userprofile.blood_grp == 'A+' %}selected{% endif %}>A+</option>
+              <option value="A-" {% if user.userprofile.blood_grp == 'A-' %}selected{% endif %}>A-</option>
+              <option value="B+" {% if user.userprofile.blood_grp == 'B+' %}selected{% endif %}>B+</option>
+              <option value="B-" {% if user.userprofile.blood_grp == 'B-' %}selected{% endif %}>B-</option>
+              <option value="AB+" {% if user.userprofile.blood_grp == 'AB+' %}selected{% endif %}>AB+</option>
+              <option value="AB-" {% if user.userprofile.blood_grp == 'AB-' %}selected{% endif %}>AB-</option>
+              <option value="O+" {% if user.userprofile.blood_grp == 'O+' %}selected{% endif %}>O+</option>
+              <option value="O-" {% if user.userprofile.blood_grp == 'O-' %}selected{% endif %}>O-</option>
             </select>
           </div>
           
           <div>
             <label class="block text-sm font-semibold text-purple-200 mb-2">Department</label>
-            <select name="department" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
-              <option value="CSE" {% if user.department == 'CSE' %}selected{% endif %}>Computer Science</option>
-              <option value="EEE" {% if user.department == 'EEE' %}selected{% endif %}>Electrical Engineering</option>
-              <option value="ME" {% if user.department == 'ME' %}selected{% endif %}>Mechanical Engineering</option>
-              <option value="CE" {% if user.department == 'CE' %}selected{% endif %}>Civil Engineering</option>
-              <option value="IPE" {% if user.department == 'IPE' %}selected{% endif %}>Industrial Engineering</option>
+            <select name="department" class="w-full bg-transparent border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <option value="" {% if user.department == '' %}selected{% endif %}>Not Selected</option>
+              <option value="CSE" {% if user.userprofile.department == 'CSE' %}selected{% endif %}>Computer Science</option>
+              <option value="EEE" {% if user.userprofile.department == 'EEE' %}selected{% endif %}>Electrical Engineering</option>
+              <option value="ME" {% if user.userprofile.department == 'ME' %}selected{% endif %}>Mechanical Engineering</option>
+              <option value="CE" {% if user.userprofile.department == 'CE' %}selected{% endif %}>Civil Engineering</option>
+              <option value="LLB" {% if user.userprofile.department == 'LLB' %}selected{% endif %}>Law</option>
             </select>
           </div>
         </div>
@@ -98,21 +100,32 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-purple-200 mb-2">Semester</label>
-            <select name="semester" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
-              {% for i in "12345678" %}
-                <option value="{{ i }}" {% if user.semester == i %}selected{% endif %}>Semester {{ i }}</option>
-              {% endfor %}
+            <select name="semester" class="w-full bg-transparent border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+                <option value="" {% if user.userprofile.semester == '' %}selected{% endif %}>Not Selected</option>
+                <option value="1.1" {% if user.userprofile.semester == '1.1' %}selected{% endif %}>Semester 1.1</option>
+                <option value="1.2" {% if user.userprofile.semester == '1.2' %}selected{% endif %}>Semester 1.2</option>
+                <option value="2.1" {% if user.userprofile.semester == '2.1' %}selected{% endif %}>Semester 2.1</option>
+                <option value="2.2" {% if user.userprofile.semester == '2.2' %}selected{% endif %}>Semester 2.2</option>
+                <option value="3.1" {% if user.userprofile.semester == '3.1' %}selected{% endif %}>Semester 3.1</option>
+                <option value="3.2" {% if user.userprofile.semester == '3.2' %}selected{% endif %}>Semester 3.2</option>
+                <option value="4.1" {% if user.userprofile.semester == '4.1' %}selected{% endif %}>Semester 4.1</option>
+                <option value="4.2" {% if user.userprofile.semester == '4.2' %}selected{% endif %}>Semester 4.2</option>
+              
             </select>
           </div>
           
           <div>
             <label class="block text-sm font-semibold text-purple-200 mb-2">Section</label>
-            <select name="section" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
-              <option value="A" {% if user.section == 'A' %}selected{% endif %}>Section A</option>
-              <option value="B" {% if user.section == 'B' %}selected{% endif %}>Section B</option>
-              <option value="C" {% if user.section == 'C' %}selected{% endif %}>Section C</option>
+            <select name="section" class="w-full bg-transparent border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              {% comment %} <option value="" {% if user.userprofile.section == '' %}selected{% endif %}>Not Selected</option> {% endcomment %}
+              <option value="A" {% if user.userprofile.section == 'A' %}selected{% endif %}>Section A</option>
+              <option value="B" {% if user.userprofile.section == 'B' %}selected{% endif %}>Section B</option>
+              <option value="C" {% if user.userprofile.section == 'C' %}selected{% endif %}>Section C</option>
+              <option value="D" {% if user.userprofile.section == 'D' %}selected{% endif %}>Section D</option>
+              <option value="E" {% if user.userprofile.section == 'E' %}selected{% endif %}>Section E</option>
             </select>
           </div>
+          
         </div>
         
         <!-- Social Links -->
@@ -127,17 +140,17 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-semibold text-purple-200 mb-2">Facebook Profile</label>
-              <input type="url" name="facebook_link" value="{{ user.facebook_link|default:'' }}" placeholder="https://facebook.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <input type="url" name="facebook_link" value="{{ user.userprofile.facebook_link|default:'' }}" placeholder="https://facebook.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
             </div>
             
             <div>
               <label class="block text-sm font-semibold text-purple-200 mb-2">GitHub Profile</label>
-              <input type="url" name="github_link" value="{{ user.github_link|default:'' }}" placeholder="https://github.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <input type="url" name="github_link" value="{{ user.userprofile.github_link|default:'' }}" placeholder="https://github.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
             </div>
             
             <div>
               <label class="block text-sm font-semibold text-purple-200 mb-2">Instagram Profile</label>
-              <input type="url" name="instagram_link" value="{{ user.instagram_link|default:'' }}" placeholder="https://instagram.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
+              <input type="url" name="instagram_link" value="{{ user.userprofile.instagram_link|default:'' }}" placeholder="https://instagram.com/username" class="w-full bg-white/10 border border-purple-400/60 text-white rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner shadow-purple-300/20">
             </div>
           </div>
         </div>

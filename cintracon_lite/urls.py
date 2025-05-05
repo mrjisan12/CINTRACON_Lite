@@ -35,5 +35,6 @@ urlpatterns = [
     path('notes_sharing/',include('notes_sharing.urls')),
     path('upcoming-events/',include('upcomingevents.urls')),
     path('Announcement/',include('Announcement.urls')),
+    path('user/', include('userprofile.urls')),
     
 ]  + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

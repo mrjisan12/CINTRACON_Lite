@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'upcomingevents',
     'Announcement',
     'django.contrib.humanize',
+    'userprofile',
     
 ]
 

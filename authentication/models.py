@@ -39,7 +39,6 @@ class CustomUser(AbstractUser):
     
 
 
-
 class UserProfile(models.Model):
 
 
@@ -75,6 +74,17 @@ class UserProfile(models.Model):
         ('D','D'),
         ('E','E'),
     )
+    
+    BLOOD_GROUPS = [
+        ('A+', 'A+'),
+        ('A-', 'A-'),
+        ('B+', 'B+'),
+        ('B-', 'B-'),
+        ('AB+', 'AB+'),
+        ('AB-', 'AB-'),
+        ('O+', 'O+'),
+        ('O-', 'O-'),
+    ]
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     department = models.CharField(max_length=100, choices=DEPARTMENTS)
@@ -82,10 +92,10 @@ class UserProfile(models.Model):
     section = models.CharField(max_length=10, choices=SECTIONS)
     batch_no = models.CharField(max_length=20)
     phone_num = models.CharField(max_length=15)
-    blood_grp = models.CharField(max_length=15)
+    blood_grp = models.CharField(max_length=15, choices=BLOOD_GROUPS,null=True,blank=True)
     points = models.IntegerField(default=0)
     facebook_link = models.CharField(max_length=255)
-    instragram_link = models.CharField(max_length=255)
+    instagram_link = models.CharField(max_length=255)
     linkedin_link = models.CharField(max_length=255)
     profile_image = models.ImageField(upload_to='profiles/', default='images/default.jpg', null=True, blank=True)
 

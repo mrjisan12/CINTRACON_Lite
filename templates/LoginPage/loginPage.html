@@ -24,17 +24,27 @@
         {% csrf_token %}
 
         <!-- Display form errors -->
-        {% if form.errors %}
-          <div class="text-red-500">
-            <ul class="errorlist">
-              {% for field in form %}
-                {% for error in field.errors %}
-                  <li>{{ error }}</li>
-                {% endfor %}
-              {% endfor %}
-            </ul>
+      {% if form.errors %}
+        <div class="mb-4 rounded-lg border border-red-500 bg-red-100 p-4 text-red-700 shadow-sm">
+          <div class="flex items-center space-x-2 mb-2">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 8v4m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 
+                      9-9 9 4.03 9 9z"/>
+            </svg>
+            <h2 class="font-semibold text-red-700">Please fix the following errors:</h2>
           </div>
-        {% endif %}
+          <ul class="list-disc list-inside space-y-1 text-sm">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
 
         <!-- Email -->
         <div>

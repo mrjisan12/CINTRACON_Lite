@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib import messages
-from .forms import *
 
 # Create your views here.
 def home(request):
@@ -52,31 +51,3 @@ def react_to_post(request, post_id, reaction_type):
 
     return redirect('home')
 
-
-@login_required
-def user_profile(request, id):
-    user = get_object_or_404(CustomUser,id=id)
-    return render(request,'ProfilePage/profile.html',{'user':user})
-
-
-@login_required
-def edit_profile(request, id):
-    user = get_object_or_404(CustomUser, id=id)
-    
-    # Check if the logged in user is editing their own profile
-    if request.user.id != user.id:
-        return redirect('profile', id=user.id)
-    
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile', id=user.id)
-    else:
-        form = UserProfileForm(instance=user)
-    
-    context = {
-        'user': user,
-        'form': form
-    }
-    return render(request, 'ProfilePage/edit_profile.html', context)

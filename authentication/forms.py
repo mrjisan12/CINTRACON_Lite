@@ -9,10 +9,11 @@ class CustomUserCreationForm(UserCreationForm):
     semester = forms.ChoiceField(choices=UserProfile.SEMESTERS)
     section = forms.ChoiceField(choices=UserProfile.SECTIONS)
     batch_no = forms.CharField(max_length=20)
+    profile_image = forms.ImageField()
 
     class Meta:
         model = CustomUser
-        fields = ['full_name', 'email', 'password1', 'password2', 'department', 'semester', 'section', 'batch_no']
+        fields = ['full_name', 'email', 'password1', 'password2', 'department', 'semester', 'section', 'batch_no', 'profile_image']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -27,6 +28,7 @@ class CustomUserCreationForm(UserCreationForm):
                 semester=self.cleaned_data.get('semester', '1.1'),
                 section=self.cleaned_data.get('section', 'A'),
                 batch_no=self.cleaned_data.get('batch_no', '1'),
+                profile_image=self.cleaned_data.get('profile_image'),
                 
             )
         return user
