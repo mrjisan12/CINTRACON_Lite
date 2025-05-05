@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
+@login_required
 def jobopportunities(request):
     jobs = JobPost.objects.all().order_by('-created_at')
     return render(request,'JobOpportunities/jobOpp.html',{"jobs":jobs})

@@ -4,6 +4,7 @@ from .models import *
 from django.contrib import messages
 
 # Create your views here.
+@login_required
 def home(request):
     posts = Post.objects.all().order_by('-created_at')  
     return render(request, 'HomePage/homePage.html', {'posts': posts})

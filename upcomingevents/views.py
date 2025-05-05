@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Create your views here.
+@login_required
 def upcomingevents(request):
     events = UpcomingEvent.objects.all().order_by('-created_at')
     return render(request,'UpComingEvents/upComingEvents.html',{"events":events})
