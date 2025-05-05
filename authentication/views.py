@@ -91,7 +91,7 @@ def register(request):
             profile.points += 20
             profile.save()
 
-            return redirect('home')  # বা redirect('login') যেটা চাও
+            return redirect('loginPage')  # বা redirect('login') যেটা চাও
         else:
             print(form.errors)
     else:
