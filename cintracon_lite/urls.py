@@ -28,7 +28,7 @@ urlpatterns = [
     path('login/', auth.loginPage, name="loginPage"),
     path('signup/', auth.signupPage, name="signupPage"),
     path('register/', auth.register, name='register'),
-     path('logout/', auth.logout_view, name='logout'),
+    path('logout/', auth.logout_view, name='logout'),
     path('home/', include('home.urls')),
     path('allstudents/', include('allstudents.urls')),
     path('job-opportunities/', include('jobopportunities.urls')),
