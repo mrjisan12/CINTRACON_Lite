@@ -7,64 +7,268 @@
     <title>Cintracon Lite</title>
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include Three.js for 3D animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+      }
+      
+      .gradient-text {
+        background: linear-gradient(45deg, #00ff87, #60efff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      
+      .floating {
+        animation: floating 6s ease-in-out infinite;
+      }
+      
+      @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+      }
+      
+      #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
+      
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
   </head>
-  <body class="bg-[#1E2836] text-white font-sans">
+  <body class="bg-[#0f172a] text-white font-sans overflow-x-hidden">
+    <!-- 3D Background Animation -->
+    <div id="3d-container" class="fixed w-full h-full top-0 left-0 z-0 opacity-20"></div>
+    
     <!-- Section 1: Hero -->
-    <section
-      class="min-h-screen flex flex-col items-center justify-center text-center px-4"
-    >
-      <img
-        src="{% static 'images/cintracon_logo.png' %}"
-        alt="Cintracon Logo"
-        class="w-32 mb-4"
-      />
-      <h1 class="text-4xl sm:text-5xl font-extrabold">
-        Welcome to <span class="text-green-500">CINTRACON Lite</span>
-      </h1>
-      <p class="mt-4 text-lg text-gray-300 max-w-xl">
-        A Student-driven Platform for Connecting, Sharing, and Growing Together.
-      </p>
-      <a
-        href="{% url 'loginPage' %}"
-        class="mt-20 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-red-800 transition"
-      >
-        Login →
-      </a>
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
+      <div class="content">
+        <!-- Animated floating logo -->
+        <div class="floating">
+          <img
+            src="{% static 'images/cintracon_logo.png' %}"
+            alt="Cintracon Logo"
+            class="w-32 mb-4 mx-auto"
+          />
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl font-extrabold mb-6">
+          Welcome to <span class="gradient-text">CINTRACON Lite</span>
+        </h1>
+        
+        <p class="mt-4 text-xl text-gray-300 max-w-2xl mx-auto">
+          A <span class="font-bold text-green-400">Student-driven Platform</span> for Connecting, Sharing, and Growing Together.
+        </p>
+        
+        <!-- Glossy button with hover effect -->
+        <a
+          href="{% url 'loginPage' %}"
+          class="mt-16 inline-block px-8 py-4 bg-gradient-to-r from-green-500 to-teal-400 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        >
+          <span class="relative z-10">Get Started →</span>
+        </a>
+        
+        <!-- Floating animated circles -->
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-green-500 opacity-10 filter blur-3xl"></div>
+        <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-blue-500 opacity-10 filter blur-3xl"></div>
+      </div>
     </section>
 
     <!-- Section 2: What Actually is CINTRACON -->
-    <section
-      class="py-20 px-6 bg-[#1C2533] flex flex-col md:flex-row items-center gap-12"
-    >
-      <!-- Text content -->
-      <div class="md:w-1/2">
-        <h2 class="text-3xl font-bold mb-4">What Actually is CINTRACON?</h2>
-        <p class="text-gray-300 text-lg">
-          CINTRACON is a student-driven platform that connects students, alumni,
-          and professionals, enabling them to share knowledge, experiences, and
-          opportunities.
-        </p>
-      </div>
-      <!-- Image -->
-      <div class="md:w-1/2">
-        <img
-          src="{% static 'images/home.jpg' %}"
-          alt="About CINTRACON"
-          class="rounded-xl shadow-lg"
-        />
+    <section class="py-28 px-6 relative">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <!-- Glass card -->
+        <div class="glass-card p-8 md:p-10">
+          <h2 class="text-3xl font-bold mb-6 gradient-text">What Actually is CINTRACON?</h2>
+          <p class="text-gray-300 text-lg leading-relaxed">
+            CINTRACON is a <span class="font-semibold text-green-400">student-driven platform</span> that connects students, alumni,
+            and professionals, enabling them to share knowledge, experiences, and
+            opportunities in a seamless, interactive environment.
+          </p>
+        </div>
+        
+        <!-- 3D floating image container -->
+        <div class="relative h-96">
+          <div class="absolute inset-0 floating">
+            <img
+              src="{% static 'images/home.jpg' %}"
+              alt="About CINTRACON"
+              class="rounded-2xl shadow-2xl w-full h-full object-cover"
+            />
+          </div>
+          <div class="absolute -z-10 -inset-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl opacity-20 blur-xl"></div>
+        </div>
       </div>
     </section>
 
     <!-- Section 3: What is Our Goal -->
-    <section class="py-20 px-6 text-center bg-[#1C2533]">
-      <h2 class="text-3xl font-bold mb-6">What is Our Goal?</h2>
-      <p class="text-gray-300 text-lg max-w-3xl mx-auto">
-        Our goal is to create an environment where students can easily interact,
-        collaborate, share academic resources, and support each other in their
-        educational journey.
-      </p>
+<section class="py-28 px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b] relative">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-4xl font-bold mb-8 gradient-text">What is Our Goal?</h2>
+    
+    <!-- Enhanced glossy cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+      <!-- Card 1 -->
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-green-400 to-teal-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+        <div class="relative bg-[#1e293b]/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.03]">
+          <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-green-400 to-teal-500 text-white text-2xl shadow-lg">
+            👥
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Connect</h3>
+          <p class="text-gray-300">Bridge students, alumni and professionals in one platform</p>
+          <div class="absolute inset-0 rounded-2xl border-2 border-white/10 pointer-events-none"></div>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+        <div class="relative bg-[#1e293b]/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.03]">
+          <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 text-white text-2xl shadow-lg">
+            📚
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Share</h3>
+          <p class="text-gray-300">Exchange knowledge and academic resources effortlessly</p>
+          <div class="absolute inset-0 rounded-2xl border-2 border-white/10 pointer-events-none"></div>
+        </div>
+      </div>
+      
+      <!-- Card 3 -->
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-purple-400 to-pink-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+        <div class="relative bg-[#1e293b]/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.03]">
+          <div class="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 text-white text-2xl shadow-lg">
+            🚀
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Grow</h3>
+          <p class="text-gray-300">Support each other in educational and professional journeys</p>
+          <div class="absolute inset-0 rounded-2xl border-2 border-white/10 pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Animated floating elements -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+    <div class="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-green-500 opacity-10 filter blur-xl animate-float"></div>
+    <div class="absolute top-3/4 right-1/4 w-24 h-24 rounded-full bg-blue-500 opacity-10 filter blur-xl animate-float-delay"></div>
+  </div>
+</section>
+
+<style>
+  /* Add these new animations to your style section */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(0) translateX(20px); }
+    75% { transform: translateY(20px) translateX(10px); }
+  }
+  
+  @keyframes float-delay {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(15px) translateX(-10px); }
+    50% { transform: translateY(0) translateX(-20px); }
+    75% { transform: translateY(-15px) translateX(-10px); }
+  }
+  
+  .animate-float {
+    animation: float 12s ease-in-out infinite;
+  }
+  
+  .animate-float-delay {
+    animation: float-delay 15s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+  
+  /* Enhance the glass card effect */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .glass-card:hover {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-5px);
+  }
+</style>
+      
+      <!-- Animated floating elements -->
+      <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+        <div class="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-green-500 opacity-10 filter blur-xl"></div>
+        <div class="absolute top-3/4 right-1/4 w-24 h-24 rounded-full bg-blue-500 opacity-10 filter blur-xl"></div>
+      </div>
     </section>
 
-     
+    <!-- Footer -->
+    <footer class="py-12 px-6 text-center text-gray-400 text-sm">
+      <p>© 2023 CINTRACON Lite. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Initialize 3D background animation
+      document.addEventListener('DOMContentLoaded', function() {
+        // Set up Three.js scene
+        const container = document.getElementById('3d-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+        
+        // Create floating geometry
+        const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+        const material = new THREE.MeshBasicMaterial({ 
+          color: 0x00ff88, 
+          wireframe: true,
+          transparent: true,
+          opacity: 0.2
+        });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+        
+        camera.position.z = 30;
+        
+        // Animation loop
+        function animate() {
+          requestAnimationFrame(animate);
+          
+          torus.rotation.x += 0.002;
+          torus.rotation.y += 0.005;
+          
+          renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+      });
+    </script>
   </body>
 </html>
